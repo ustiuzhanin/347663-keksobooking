@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Slava Ustiuzhanin](https://up.htmlacademy.ru/javascript/16/user/347663).
-* Наставник: `Неизвестно`.
+* Наставник: ``.
 
 ---
 
