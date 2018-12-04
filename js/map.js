@@ -200,25 +200,81 @@ window.addEventListener('load', function () {
 
 /* page activation */
 
-var onMainPinMouseup = function () {
-  map.classList.remove('map--faded');
-  adForm.classList.remove('ad-form--disabled');
+var PIN_BOTTOM_POS = 64;
+var PIN_LEFT_POS = 25;
+var PIN_WIDTH = 65;
+var PIN_HEIGTH = 82;
+var pins = document.querySelector('.map__pins');
 
-  switсhFormСondition(adFormFieldset, false);
-  switсhFormСondition(filtersFormChildren, false);
-  addMarkers(adsList);
+mainPin.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
 
-  changeAdressValue(600, 300);
-  loadPopup();
-};
+  var startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
 
-mainPin.addEventListener('mouseup', onMainPinMouseup);
+  var onMouseMove = function (moveEvt) {
+    var shift = {
+      x: startCoords.x - moveEvt.clientX,
+      y: startCoords.y - moveEvt.clientY
+    };
+
+    startCoords = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+
+    var pinPosTop = (mainPin.offsetTop - shift.y);
+    var pinPosleft = (mainPin.offsetLeft - shift.x);
+
+    if (pinPosTop < MIN_Y) {
+      mainPin.style.top = MIN_Y + 'px';
+    } else if (pinPosTop + PIN_HEIGTH > MAX_Y) {
+      mainPin.style.top = MAX_Y - PIN_HEIGTH + 'px';
+    } else if (pinPosleft < MIN_X) {
+      mainPin.style.left = MIN_X + 'px';
+    } else if (pinPosleft + PIN_WIDTH > MAX_X) {
+      mainPin.style.left = MAX_X - PIN_WIDTH + 'px';
+    } else {
+      mainPin.style.top = pinPosTop + 'px';
+      mainPin.style.left = pinPosleft + 'px';
+    }
+
+    var pinAdressY = parseInt(mainPin.style.top, 10) + PIN_BOTTOM_POS;
+    var pinAdressX = parseInt(mainPin.style.left, 10) + PIN_LEFT_POS;
+    changeAdressValue(pinAdressY, pinAdressX);
+  };
+
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+
+    if (pins.children.length <= 2) {
+      map.classList.remove('map--faded');
+      adForm.classList.remove('ad-form--disabled');
+
+      switсhFormСondition(adFormFieldset, false);
+      switсhFormСondition(filtersFormChildren, false);
+      addMarkers(adsList);
+
+      loadPopup();
+    }
+
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+});
+
+// mainPin.addEventListener('mouseup', onMainPinMouseup);
+
 
 /* open card popup */
 
-
 var loadPopup = function () {
-  var pins = document.querySelector('.map__pins');
+  var pin = document.querySelector('.map__pins');
 
   var onPopupEscPress = function (evt) {
     if (evt.keyCode === ESC_CODE) {
@@ -253,7 +309,7 @@ var loadPopup = function () {
   var onPinsClick = function (evt) {
     var target = evt.target;
 
-    while (target !== pins) {
+    while (target !== pin) {
       if (target.tagName === 'BUTTON') {
         break;
       }
@@ -269,7 +325,7 @@ var loadPopup = function () {
     closePopup();
   };
 
-  pins.addEventListener('click', onPinsClick);
+  pin.addEventListener('click', onPinsClick);
 };
 
 /* form restrictions */
