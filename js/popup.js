@@ -2,7 +2,7 @@
 
 (function () {
 
-  var loadPopup = function () {
+  var loadPopup = function (data) {
     var pin = document.querySelector('.map__pins');
     var map = document.querySelector('.map');
 
@@ -28,7 +28,7 @@
         }
       });
 
-      window.cardRender.addCard(window.ads.list, index);
+      window.cardRender.addCard(data, index);
 
       var popupCloseBtn = document.querySelector('.popup__close');
 

@@ -28,7 +28,16 @@
     pinsContainer.appendChild(fragment);
   };
 
+  var removeMarkers = function () {
+    Array.from(pinsContainer.children).forEach(function (item) {
+      if (item.type === 'button') {
+        pinsContainer.removeChild(item);
+      }
+    });
+  };
+
   window.markersRender = {
-    addMarkers: addMarkers
+    addMarkers: addMarkers,
+    removeMarkers: removeMarkers
   };
 })();

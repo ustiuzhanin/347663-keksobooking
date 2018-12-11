@@ -8,6 +8,10 @@
   var filtersFormChildren = filtersForm.querySelector('.map__filters').children;
   var mainPin = document.querySelector('.map__pin--main');
   var map = document.querySelector('.map');
+  var mainPinStartCoordinates = {
+    left: mainPin.offsetLeft,
+    top: mainPin.offsetTop
+  };
 
   /* deactivating page on the first website load */
 
@@ -88,14 +92,55 @@
       upEvt.preventDefault();
 
       if (pins.children.length <= 2) {
-        map.classList.remove('map--faded');
-        adForm.classList.remove('ad-form--disabled');
 
-        switсhFormСondition(adFormFieldset, false);
-        switсhFormСondition(filtersFormChildren, false);
-        window.markersRender.addMarkers(window.ads.list);
+        var onLoad = function (respond) {
+          map.classList.remove('map--faded');
+          adForm.classList.remove('ad-form--disabled');
 
-        window.popup.load();
+          switсhFormСondition(adFormFieldset, false);
+          switсhFormСondition(filtersFormChildren, false);
+
+          window.markersRender.addMarkers(respond);
+          window.popup.load(respond);
+        };
+
+        var onError = function (message) {
+          var pageMain = document.querySelector('main');
+          var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+
+          /* add error message */
+          var errorElement = errorTemplate.cloneNode(true);
+          var closeErrorBtn = errorElement.querySelector('.error__button');
+          errorElement.querySelector('.error__message').textContent = message;
+
+          pageMain.appendChild(errorElement);
+
+          /* close error message */
+          var closeError = function () {
+            pageMain.removeChild(errorElement);
+            document.removeEventListener('keydown', onErrorEscPress);
+            closeErrorBtn.addEventListener('keydown', onErrorBtnPress);
+          };
+          var onErrorBtnPress = function (e) {
+            if (e.keyCode === window.util.keyCodes.enter) {
+              closeError();
+            }
+          };
+          var onErrorEscPress = function (e) {
+            if (e.keyCode === window.util.keyCodes.esc) {
+              closeError();
+            }
+          };
+          var onErrorBtnClick = function () {
+            closeError();
+          };
+
+          closeErrorBtn.addEventListener('click', onErrorBtnClick);
+          closeErrorBtn.addEventListener('keydown', onErrorBtnPress);
+          document.addEventListener('keydown', onErrorEscPress);
+        };
+
+        window.backend.load(onLoad, onError);
       }
 
       document.removeEventListener('mousemove', onMouseMove);
@@ -105,4 +150,10 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
+
+  window.pageLoad = {
+    mainPinStartCoordinates: mainPinStartCoordinates,
+    disableForm: switсhFormСondition
+  };
+
 })();
