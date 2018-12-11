@@ -43,7 +43,16 @@
     map.insertBefore(cardElement, filtersContainer);
   };
 
+  var removeCard = function () {
+    Array.from(map.children).forEach(function (item) {
+      if (item.classList.contains('popup')) {
+        map.removeChild(item);
+      }
+    });
+  };
+
   window.cardRender = {
-    addCard: renderCard
+    addCard: renderCard,
+    removeCard: removeCard
   };
 })();
