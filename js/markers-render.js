@@ -23,12 +23,8 @@
   var addMarkers = function (adsObj) {
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < adsObj.length; i++) {
-      if (i === MAX_MARKERS_RENDER) {
-        break;
-      } else {
-        fragment.appendChild(renderMarkers(adsObj[i], i));
-      }
+    for (var i = 0; i < Math.min(adsObj.length, MAX_MARKERS_RENDER); i++) {
+      fragment.appendChild(renderMarkers(adsObj[i], i));
     }
 
     pinsContainer.appendChild(fragment);
@@ -43,7 +39,7 @@
   };
 
   window.markersRender = {
-    addMarkers: addMarkers,
-    removeMarkers: removeMarkers
+    add: addMarkers,
+    remove: removeMarkers
   };
 })();

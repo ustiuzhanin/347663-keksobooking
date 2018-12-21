@@ -2,6 +2,11 @@
 
 (function () {
 
+  var PIN_BOTTOM_POS = 64;
+  var PIN_LEFT_POS = 25;
+  var PIN_WIDTH = 65;
+  var PIN_HEIGTH = 82;
+
   var adForm = document.querySelector('.ad-form');
   var adFormFieldset = adForm.querySelectorAll('fieldset');
   var filtersForm = document.querySelector('.map__filters-container');
@@ -34,7 +39,7 @@
     switсhFormСondition(adFormFieldset, true);
     switсhFormСondition(filtersFormChildren, true);
 
-    /* adress coordinates */
+    /* adaddinates */
     var defaultPinPositionLeft = mainPin.offsetLeft + Math.round(mainPin.offsetWidth / 2);
     var defaultPinPositionTop = mainPin.offsetTop + Math.round(mainPin.offsetHeight / 2);
     changeAdressValue(defaultPinPositionLeft, defaultPinPositionTop);
@@ -42,10 +47,6 @@
 
   /* activating page on the first interaction + add mouse move event to the main pin */
 
-  var PIN_BOTTOM_POS = 64;
-  var PIN_LEFT_POS = 25;
-  var PIN_WIDTH = 65;
-  var PIN_HEIGTH = 82;
   var pins = document.querySelector('.map__pins');
 
   mainPin.addEventListener('mousedown', function (evt) {
@@ -100,7 +101,7 @@
           switсhFormСondition(adFormFieldset, false);
           switсhFormСondition(filtersFormChildren, false);
 
-          window.markersRender.addMarkers(respond);
+          window.markersRender.add(respond);
           window.popup.load(respond);
           window.filters.onChange(respond);
 
