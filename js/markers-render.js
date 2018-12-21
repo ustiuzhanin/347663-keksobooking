@@ -2,6 +2,7 @@
 
 (function () {
 
+  var MAX_MARKERS_RENDER = 5;
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var pinsContainer = document.querySelector('.map__pins');
   var pinWidth = 50;
@@ -19,12 +20,13 @@
     return pinElement;
   };
 
-  var addMarkers = function (amount) {
+  var addMarkers = function (adsObj) {
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < amount.length; i++) {
-      fragment.appendChild(renderMarkers(amount[i], i));
+    for (var i = 0; i < Math.min(adsObj.length, MAX_MARKERS_RENDER); i++) {
+      fragment.appendChild(renderMarkers(adsObj[i], i));
     }
+
     pinsContainer.appendChild(fragment);
   };
 
@@ -37,7 +39,7 @@
   };
 
   window.markersRender = {
-    addMarkers: addMarkers,
-    removeMarkers: removeMarkers
+    add: addMarkers,
+    remove: removeMarkers
   };
 })();

@@ -1,6 +1,12 @@
 'use strict';
 
 (function () {
+  var GUESTS = {
+    1: 3,
+    2: 2,
+    3: 1,
+    100: 4
+  };
 
   var adForm = document.querySelector('.ad-form');
   var map = document.querySelector('.map');
@@ -60,12 +66,6 @@
   var numberOfGuests = document.querySelector('#capacity');
 
   var guestsArr = Array.from(numberOfGuests.children);
-  var guests = {
-    1: 3,
-    2: 2,
-    3: 1,
-    100: 4
-  };
 
   var setGuestsCapacity = function (rooms) {
 
@@ -79,10 +79,10 @@
 
     if (roomsNumber !== 100) {
       for (var i = 1; i <= roomsNumber; i++) {
-        guestsArr[guests[i]].disabled = false;
+        guestsArr[GUESTS[i]].disabled = false;
       }
     } else {
-      guestsArr[guests[100]].disabled = false;
+      guestsArr[GUESTS[100]].disabled = false;
     }
     /* set the value to none after changing the staying type */
     numberOfGuests.value = '';
@@ -111,7 +111,6 @@
       numberOfGuests.setCustomValidity('Выберите количество гостей');
     }
   };
-  // onRoomChange();
 
   numberOfRooms.addEventListener('change', onRoomChange);
 
@@ -127,7 +126,7 @@
 
     /* reset the map to its primary state  */
     map.classList.add('map--faded');
-    window.markersRender.removeMarkers();
+    window.markersRender.remove();
     window.cardRender.removeCard();
 
     /* reset the main pin position */
