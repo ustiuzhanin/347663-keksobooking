@@ -102,6 +102,8 @@
 
           window.markersRender.addMarkers(respond);
           window.popup.load(respond);
+          window.filters.onChange(respond);
+
         };
 
         var onError = function (message) {
@@ -157,3 +159,12 @@
   };
 
 })();
+
+/*
+ добавить листенер на ченж фильтров
+  в него функцию рендера маркеров с колбеком на фильтры
+  в него функцию открытия попапа с колбеком на фильтры
+
+
+
+*/
