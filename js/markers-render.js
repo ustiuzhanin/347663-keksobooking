@@ -24,7 +24,7 @@
     var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < adsObj.length; i++) {
-      if (i === 5) {
+      if (i === MAX_MARKERS_RENDER) {
         break;
       } else {
         fragment.appendChild(renderMarkers(adsObj[i], i));
@@ -41,11 +41,6 @@
       }
     });
   };
-
-
-  // pinTemplate.addEventListener('click', function () {
-  //   window.popup.loadPopup(adsObj);
-  // })
 
   window.markersRender = {
     addMarkers: addMarkers,
