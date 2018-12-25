@@ -5,11 +5,11 @@
   var GET_URL = 'https://js.dump.academy/keksobooking/data';
   var POST_URL = 'https://js.dump.academy/keksobooking';
   var XHR_TIMEOUT = 10000;
-  var RESPOND_CODES = {
-    ok: 200,
-    requestError: 400,
-    rightsError: 401,
-    notFoundError: 404
+  var RespondCodes = {
+    OK: 200,
+    REQUEST_ERROR: 400,
+    RIGHTS_ERROR: 401,
+    NOT_FOUND_ERROR: 404
   };
 
   var loadData = function (onLoad, onError) {
@@ -20,16 +20,16 @@
     xhr.addEventListener('load', function () {
 
       switch (xhr.status) {
-        case RESPOND_CODES.ok:
+        case RespondCodes.OK:
           onLoad(xhr.response);
           break;
-        case RESPOND_CODES.requestError:
+        case RespondCodes.REQUEST_ERROR:
           onError('Неверный запрос');
           break;
-        case RESPOND_CODES.rightsError:
+        case RespondCodes.RIGHTS_ERROR:
           onError('Пользователь не авторизирован');
           break;
-        case RESPOND_CODES.notFoundError:
+        case RespondCodes.NOT_FOUND_ERROR:
           onError('Страница не найдена');
           break;
       }
@@ -53,7 +53,7 @@
     xhr.timeout = XHR_TIMEOUT;
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === RESPOND_CODES.ok) {
+      if (xhr.status === RespondCodes.OK) {
         onLoad('Данные успешно отправлены');
       } else {
         onError('Неизвестный статус: ' + xhr.status + ' ' + xhr.statusText);

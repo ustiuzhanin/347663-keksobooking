@@ -2,28 +2,20 @@
 
 (function () {
 
-  var APARTMENT_TYPE = {
-    palace: 'Дворец',
-    flat: 'Квартира',
-    house: 'Дом',
-    bungalo: 'Бунгало'
+  var Measurements = {
+    MIN_X: 0,
+    MIN_Y: 130,
+    MAX_X: 1200,
+    MAX_Y: 630
   };
 
-  var MEASUREMENTS = {
-    minX: 100,
-    minY: 130,
-    maxX: 1100,
-    maxY: 630
-  };
-
-  var keyCodes = {
-    esc: 27,
-    enter: 15
+  var KeyCodes = {
+    ESC: 27,
+    ENTER: 15
   };
 
   window.util = {
-    keyCodes: keyCodes,
-    apartment: APARTMENT_TYPE,
-    measurements: MEASUREMENTS
+    keyCodes: KeyCodes,
+    measurements: Measurements
   };
 })();

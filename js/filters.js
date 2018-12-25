@@ -57,12 +57,13 @@
           });
         };
 
-        var filtered = Array.from(adsObj)
-            .filter(getFilteredType)
-            .filter(getFilteredRooms)
-            .filter(getFilteredPrice)
-            .filter(getFilteredGuests)
-            .filter(getFilteredFeatures);
+        var filtered = Array.from(adsObj).filter(function (item) {
+          return getFilteredType(item)
+          && getFilteredRooms(item)
+          && getFilteredPrice(item)
+          && getFilteredGuests(item)
+          && getFilteredFeatures(item);
+        });
 
         window.markersRender.add(filtered);
         window.popup.load(filtered);

@@ -628,6 +628,11 @@ fieldset {
           box-shadow: 0 0 2px 2px #ff6547;
 }
 
+.validity-error {
+  -webkit-box-shadow: 0 0 2px 2px red;
+          box-shadow: 0 0 2px 2px red;
+}
+
 .ad-form__element--time {
   -ms-flex-preferred-size: 50%;
       flex-basis: 50%;
