@@ -3,13 +3,14 @@
 (function () {
 
   var changeFilters = function (adsObj) {
+    var LOW_PRICE = 10000;
+    var HIGH_PRICE = 50000;
     var mapFilters = document.querySelector('.map__filters');
     var filterType = document.querySelector('#housing-type');
     var filterRooms = document.querySelector('#housing-rooms');
     var filterPrice = document.querySelector('#housing-price');
     var filterGuests = document.querySelector('#housing-guests');
-    var LOW_PRICE = 10000;
-    var HIGH_PRICE = 50000;
+
 
     var onFiltersFormChange = function () {
       window.debounce(function () {

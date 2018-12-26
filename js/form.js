@@ -184,46 +184,10 @@
     document.addEventListener('keydown', onEscPress);
   };
 
-  var onError = function (message) {
-    var pageMain = document.querySelector('main');
-    var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-
-    /* add error message */
-    var errorElement = errorTemplate.cloneNode(true);
-    var closeErrorBtn = errorElement.querySelector('.error__button');
-    errorElement.querySelector('.error__message').textContent = message;
-
-    pageMain.appendChild(errorElement);
-
-    /* close error message */
-    var closeError = function () {
-      pageMain.removeChild(errorElement);
-      document.removeEventListener('keydown', onErrorEscPress);
-      closeErrorBtn.addEventListener('keydown', onErrorBtnPress);
-    };
-    var onErrorBtnPress = function (evt) {
-      if (evt.keyCode === window.util.keyCodes.ENTER) {
-        closeError();
-      }
-    };
-    var onErrorEscPress = function (evt) {
-      if (evt.keyCode === window.util.keyCodes.ESC) {
-        closeError();
-      }
-    };
-    var onErrorBtnClick = function () {
-      closeError();
-    };
-
-    closeErrorBtn.addEventListener('click', onErrorBtnClick);
-    closeErrorBtn.addEventListener('keydown', onErrorBtnPress);
-    document.addEventListener('keydown', onErrorEscPress);
-  };
-
   var onFormSubmit = function (evt) {
     evt.preventDefault();
 
-    window.backend.post(onLoad, onError, new FormData(adForm));
+    window.backend.post(onLoad, window.backend.onError, new FormData(adForm));
   };
 
   adForm.addEventListener('submit', onFormSubmit);

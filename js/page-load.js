@@ -49,9 +49,9 @@
 
   var activatePage = function () {
     if (!activation) {
-      activation = true;
 
       var onLoad = function (respond) {
+        activation = true;
         map.classList.remove('map--faded');
         adForm.classList.remove('ad-form--disabled');
         adressInput.readOnly = true;
@@ -65,43 +65,7 @@
 
       };
 
-      var onError = function (message) {
-        var pageMain = document.querySelector('main');
-        var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-
-        /* add error message */
-        var errorElement = errorTemplate.cloneNode(true);
-        var closeErrorBtn = errorElement.querySelector('.error__button');
-        errorElement.querySelector('.error__message').textContent = message;
-
-        pageMain.appendChild(errorElement);
-
-        /* close error message */
-        var closeError = function () {
-          pageMain.removeChild(errorElement);
-          document.removeEventListener('keydown', onErrorEscPress);
-          closeErrorBtn.addEventListener('keydown', onErrorBtnPress);
-        };
-        var onErrorBtnPress = function (e) {
-          if (e.keyCode === window.util.keyCodes.ENTER) {
-            closeError();
-          }
-        };
-        var onErrorEscPress = function (e) {
-          if (e.keyCode === window.util.keyCodes.ESC) {
-            closeError();
-          }
-        };
-        var onErrorBtnClick = function () {
-          closeError();
-        };
-
-        closeErrorBtn.addEventListener('click', onErrorBtnClick);
-        closeErrorBtn.addEventListener('keydown', onErrorBtnPress);
-        document.addEventListener('keydown', onErrorEscPress);
-      };
-
-      window.backend.load(onLoad, onError);
+      window.backend.load(onLoad, window.backend.onError);
     }
   };
 
