@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var DEFAULT_AVATAR = 'img/muffin-grey.svg';
   var NOT_FOR_GUESTS_CODE = 100;
   var MinStayingPrice = {
     BUNGALO: 0,
@@ -140,6 +141,8 @@
 
   var deactivateForm = function () {
     adForm.reset();
+    preview.src = DEFAULT_AVATAR;
+    clearLoadedPictures();
     onStayingChange();
     window.pageLoad.disableForm(adFormFieldset, true);
     window.pageLoad.disableForm(filtersForm, true);
@@ -202,4 +205,62 @@
   };
 
   formResetBtn.addEventListener('click', onResetBtnClick);
+
+  /* avatar load */
+
+  var avatarLoadInput = document.querySelector('#avatar');
+  var preview = document.querySelector('.ad-form-header__preview img');
+
+  var renderPicture = function (element, file) {
+    var reader = new FileReader();
+
+    reader.addEventListener('load', function () {
+      element.src = reader.result;
+    });
+
+    reader.readAsDataURL(file);
+  };
+
+  var onAvatarLoadChange = function () {
+    var file = avatarLoadInput.files[0];
+
+    renderPicture(preview, file);
+  };
+
+  avatarLoadInput.addEventListener('change', onAvatarLoadChange);
+
+  /* pictures load */
+
+  var picturesLoadInput = document.querySelector('#images');
+  var picturesLoadContainer = document.querySelector('.ad-form__photo-container');
+
+  var clearLoadedPictures = function () {
+    var photoRenderContainer = document.querySelectorAll('.ad-form__photo');
+
+    photoRenderContainer.forEach(function (item) {
+      picturesLoadContainer.removeChild(item);
+    });
+  };
+
+  var onPicturesLoadChange = function (evt) {
+    var filesList = evt.target.files;
+    clearLoadedPictures();
+
+    Array.from(filesList).forEach(function (item) {
+      var imageContainer = document.createElement('div');
+      var imageElement = document.createElement('img');
+
+      imageContainer.classList.add('ad-form__photo');
+      imageElement.classList.add('ad-form__photo--element');
+      imageElement.style.width = '100%';
+      imageElement.style.height = '100%';
+
+      renderPicture(imageElement, item);
+
+      imageContainer.appendChild(imageElement);
+      picturesLoadContainer.appendChild(imageContainer);
+    });
+  };
+
+  picturesLoadInput.addEventListener('change', onPicturesLoadChange);
 })();
