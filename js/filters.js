@@ -28,9 +28,11 @@
         var getFilteredPrice = function (item) {
           if (filterPrice.value === 'low') {
             return item.offer.price <= LOW_PRICE;
-          } else if (filterPrice.value === 'middle') {
+          }
+          if (filterPrice.value === 'middle') {
             return (item.offer.price > LOW_PRICE && item.offer.price <= HIGH_PRICE);
-          } else if (filterPrice.value === 'high') {
+          }
+          if (filterPrice.value === 'high') {
             return item.offer.price > HIGH_PRICE;
           }
           return item;
